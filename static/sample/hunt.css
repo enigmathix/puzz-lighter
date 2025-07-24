@@ -1,0 +1,270 @@
+:root {
+	--body-font: 17px;
+	--button-font: 18px;
+	--puzzle-button-font: 16px;
+	--puzzle-answer-font: 20px;
+	--title-font: 40px;
+	--footer-font: 14px;
+	--puzzle-title-font: 50px;
+	--puzzle-author-font: 24px;
+}
+
+body {
+	display: flex;
+	flex-direction: row;
+	font-family: 'Roboto', Arial, sans-serif;
+	background-color: black;
+	color: white;
+	font-size: var(--body-font);
+	font-weight: 400;
+}
+
+.background {
+	position: relative;
+	z-index: 0;
+}
+
+.background::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-image: url('background.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	opacity: 0.5;
+	z-index: -1;
+}
+
+a {
+	color: white;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-top: 5em;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	text-decoration: none;
+}
+
+.menu .button {
+	width: 6em;
+	height: 2.8em;
+	margin-bottom: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	color: grey;
+	border: 2px solid grey;
+	transition: color 0.3s, border-color 0.3s;
+	font-size: var(--button-font);
+	font-weight: 700;
+}
+
+.menu .button:hover, .top-menu .button:hover, .puzzle-menu .button:hover {
+	color: white;
+	border-color: white;
+}
+
+.menu .button.active, .top-menu .button.active {
+	color: white;
+	border-color: white;
+}
+
+.bottom-menu {
+	display: flex;
+	justify-content: center;
+	padding: 2em 0;
+}
+
+.bottom-menu .button {
+	min-width: 5em;
+	height: 2em;
+	margin: 0 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	font-size: var(--button-font);
+	font-weight: 700;
+}
+
+.push.button {
+	background-color: #212121;
+	color: white;
+	border: 2px solid white;
+}
+
+.push.button:hover, .push.button:disabled {
+	background-color: #646464;
+}
+
+.submit .button {
+	background: none;
+	font: inherit;
+	cursor: pointer;
+	padding: 0 1em;
+	margin-left: .5em;
+	margin-right: 1em;
+	height: 2em;
+	font-weight: 700;
+}
+
+.top-menu {
+	display: flex;
+	flex-flow: row wrap;
+	row-gap: .5em;
+	justify-content: center;
+	padding: 1em .5em;
+	margin-bottom: 1em;
+}
+
+.top-menu .button {
+	width: 7em;
+	height: 2.5em;
+	margin: 0 1em;
+	color: grey;
+	border: 2px solid grey;
+	font-weight: 700;
+}
+
+.main-content {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	padding: 20px 20px 20px 20px;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	padding: 20px 0;
+}
+
+.title {
+	font-size: var(--title-font);
+	font-weight: 700;
+	margin: 0;
+}
+
+.footnote {
+	font-size: var(--footer-font);
+	margin: 0;
+}
+
+.content {
+	flex: 1;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+footer {
+	font-size: var(--footer-font);
+	color: grey;
+	margin-left: auto;
+	margin-right: auto;
+	bottom: 1em;
+}
+
+.home p {
+	text-align: justify;
+	line-height: 1.5em;
+}
+
+.details li {
+	text-align: justify;
+	line-height: 1.5em;
+	margin-bottom: 1em;
+}
+
+.acknowledgments p {
+	text-align: justify;
+	line-height: 1.5em;
+}
+
+.acknowledgments .stars {
+	display: flex;
+	justify-content: center;
+}
+
+.acknowledgments .stars img {
+	width: 7em;
+	margin: .5em;
+}
+
+.acknowledgments .highlight {
+	color: orange;
+}
+
+.teams .winner::before, .teams .winner::after {
+	content: "";
+	display: inline-block;
+	height: var(--body-font);
+	width: calc(34px/1.732);
+	background-image: url('icon.png');
+	background-size: cover;
+	vertical-align: baseline;
+}
+
+.teams .winner::before {
+	margin-right: 8px;
+}
+
+.teams .winner::after {
+	margin-left: 8px;
+}
+
+@media not all and (min-width: 1000px) and (orientation: landscape) {
+	:root {
+		--body-font: 2vw;
+		--title-font: 4vw;
+		--button-font: 2vw;
+		--puzzle-button-font: 1.8vw;
+		--puzzle-answer-font: 2.2vw;
+		--footer-font: 1.5vw;
+		--puzzle-title-font: 6vw;
+		--puzzle-author-font: 3.5vw;
+	}
+
+	@supports (font-size: clamp(12px, 2vw, 17px)) {
+		:root {
+			--body-font: clamp(12px, 2vw, 17px);
+			--title-font: clamp(12px, 4vw, 40px);
+			--button-font: clamp(10px, 2vw, 18px);
+			--puzzle-button-font: clamp(10px, 1.8vw, 16px);
+			--puzzle-answer-font: clamp(10px, 2.2vw, 20px);
+			--footer-font: clamp(12px, 1.5vw, 14px);
+			--puzzle-title-font: clamp(12px, 6vw, 50px);
+			--puzzle-author-font: clamp(8px, 3.5vw, 24px);
+		}
+	}
+
+	body {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.menu {
+		flex-flow: row wrap;
+		justify-content: center;
+		margin-top: 1em;
+		row-gap: .5em;
+		column-gap: 1em;
+	}
+
+	.menu .button {
+		margin: 0 .2em;
+	}
+}
+

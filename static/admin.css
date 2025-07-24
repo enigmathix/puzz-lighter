@@ -1,0 +1,233 @@
+body {
+	font-family: 'Verdana';
+}
+
+h3 {
+	text-align: center;
+}
+
+a {
+	color: black;
+}
+
+a:hover {
+	color: blue;
+}
+
+a.live:hover {
+	color: red;
+}
+
+.error {
+	color: red;
+}
+
+input, select {
+	width: fit-content;
+	padding: .3em .5em;
+}
+
+.form-grid {
+	display: grid;
+	gap: 10px;
+	padding: 20px;
+	background-color: #e8e8e8;
+	border-radius: 8px;
+	box-shadow: 3px 3px 3px #c5c4c2;
+	border: 1px solid #ccc;
+	max-width: 90%;
+	margin: 20 auto;
+}
+
+.form-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.form-row textarea {
+	resize: vertical;
+}
+
+.form-row .zone {
+	margin-left: .5em;
+	font-size: 14px;
+}
+
+.form-submit {
+	text-align: right;
+}
+
+.hidden {
+	display: none;
+}
+
+.list {
+	list-style-type: none;
+	margin-top: 10px;
+}
+
+.required::after {
+	content: " *";
+	color: red;
+}
+
+.btn-delete {
+	background-color: #ffcccb;
+}
+
+.btn-delete:hover {
+	background-color: red;
+	color: white;
+}
+
+.btn-update {
+	background-color: lightgreen;
+}
+
+.btn-update:hover {
+	background-color: green;
+	color: white;
+}
+
+.logsrow {
+	margin: 0 auto;
+}
+
+.logsheader {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.arrow {
+	font-size: 1.5em;
+	text-decoration: none;
+}
+
+.arrow.left {
+	text-align: left;
+}
+
+.arrow.right {
+	text-align: right;
+}
+
+.logs {
+	box-shadow: 3px 3px 3px #c5c4c2;
+	border-radius: 10px;
+	margin: 1em;
+}
+
+.logs table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 14px;
+}
+
+.logs th a {
+	text-decoration: underline;
+}
+
+.logs table tr th, .logs table tr td {
+	border-right: 1px solid #bbb;
+	border-bottom: 1px solid #bbb;
+}
+
+.logs tr th:first-child, .logs tr td:first-child {
+	border-left: 1px solid #bbb;
+}
+
+.logs tr th {
+	border-top: 1px solid #bbb;
+}
+
+.logs tr:first-child th:first-child {
+	border-top-left-radius: 10px;
+}
+
+.logs tr:first-child th:last-child {
+	border-top-right-radius: 10px;
+}
+
+.logs tr:last-child td:first-child {
+	border-bottom-left-radius: 10px;
+}
+
+.logs tr:last-child td:last-child {
+	border-bottom-right-radius: 10px;
+}
+
+.logs th, .logs td {
+	padding: 5px;
+}
+
+.logs th {
+	background-color: #ddd;
+}
+
+.logs tr {
+	background-color: #e8e8e8;
+}
+
+@keyframes highlight {
+	from {
+		background-color: red;
+	}
+	to {
+		background-color: #e8e8e8;
+	}
+}
+
+.highlight {
+	animation: highlight 3s ease;
+}
+
+.logs .left {
+	text-align: left;
+}
+
+.logs .date {
+	min-width: 15em;
+}
+
+.logs .time {
+	width: 15em;
+}
+
+.logs .center {
+	text-align: center;
+}
+
+.logs .right {
+	text-align: right;
+}
+
+.logs ul {
+	padding-left: 1em;
+	padding-bottom: 0;
+}
+
+.DEFAULT {
+	color: #333;
+}
+
+.s2, .INFO {
+	color: green;
+}
+
+.s3, .DEBUG {
+	color: blue;
+}
+
+.WARNING {
+	color: #f60;
+}
+
+.s4, .ERROR {
+	color: red;
+}
+
+.s5, .CRITICAL {
+	color: purple;
+}

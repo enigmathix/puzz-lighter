@@ -1,0 +1,66 @@
+<input type="hidden" name="timezone" class="timezone"/>
+<input type="hidden" name="roundslug" value="{{ roundSlug }}">
+<div class="form-row">
+<label title="Path in the url, e.g. puzzle1" class="required">Slug</label>
+{% if puzzleSlug %}
+<input type="text" name="slug" value="{{ puzzleSlug }}" readonly />
+{% else %}
+<input type="text" name="slug" required />
+{% endif %}
+</div>
+<div class="form-row">
+<label title="Index of the puzzle in the round" class="required">Order</label><input type="number"  name="order" step="1" value="{{ puzzle.order }}" required>
+</div>
+<div class="form-row">
+<label>Meta?</label><input type="checkbox" name="meta" 
+{% if puzzle.meta %}
+checked
+{% endif %}
+/>
+</div>
+<div class="form-row">
+<label>Meta-meta?</label><input type="checkbox" name="metameta" 
+{% if puzzle.metameta %}
+checked
+{% endif %}
+/>
+</div>
+<div class="form-row">
+<label class="required">Name</label><input type="text" name="name" value="{{ puzzle.name }}" required />
+</div>
+<div>
+	Answers <button type="button" id="add-answer">+</button>
+	<div class="form-grid" id="answers">
+	</div>
+</div>
+<div class="form-row">
+<label title="Time when puzzle is unlocked">Time-based Unlock</label><div><input type="datetime-local" name="unlockTime" class="datetime" value="{{ puzzle.unlockTime }}" /><span class="zone"></span></div>
+</div>
+<div class="form-row">
+<label title="Number of solved puzzles before this one is unlocked">Count-based Unlock</label><input type="number" name="unlockPuzzleCount" step="1" value="{{ puzzle.unlockPuzzleCount or '' }}" />
+</div>
+<div>
+	Puzzles unlocking this one <button type="button" id="add-puzzle">+</button>
+	<div class="form-grid" id="unlockPuzzles">
+	</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	var roundPuzzleCount = 0;
+	var answerCount = 1;
+	var roundPuzzles = {{ roundPuzzles|tojson }};
+
+	for (unlockPuzzle of {{ puzzle.unlockPuzzles|tojson }}) {
+		addPuzzleSelection(++roundPuzzleCount, 'unlockPuzzles', roundPuzzles, unlockPuzzle);
+	}
+
+	{% for answer, params in puzzle.answers.items() %}
+		addFieldAnswer(answerCount, 'answer', 'Answer', '{{ answer }}', {{ params|tojson }});
+		answerCount++;
+	{% endfor %}
+
+	document.getElementById('add-puzzle').addEventListener('click', () => addPuzzleSelection(++roundPuzzleCount, 'unlockPuzzles', {{ roundPuzzles|tojson }}));
+	document.getElementById('add-answer').addEventListener('click', () => addFieldAnswer(answerCount++, 'answer', 'Answer', '', ''));
+});
+</script>

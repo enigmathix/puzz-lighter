@@ -1,0 +1,20 @@
+{% extends "puzzle.html" %}
+{% set puzzleId="2" %}
+{% set icon="image.png" %}
+{% set rating=3 %}
+{% set sheet="https://en.wikipedia.org/wiki/Metapuzzle" %}
+{% set hints={
+    1: "The answer is in the question.",
+    2: "It's in the title too.",
+    3: "If it's not 1, what is it?",
+} %}
+{% block banner %}
+	{% set banner.author='Buzz Lightyear' %}
+	{{ super() }}
+{% endblock %}
+{% block puzzle %}
+<p>You may need hints to solve this meta.</p>
+{% endblock %}
+{% block solution %}
+<p>The answer was just meta.</b>
+{% endblock %}

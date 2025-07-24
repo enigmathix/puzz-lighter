@@ -1,0 +1,62 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ g.cdn }}/admin.css" />
+	<script src="{{ g.cdn }}/admin.js" defer></script>
+	<title>{{ round.name }}</title>
+</head>
+<body>
+	{% set cat='error' %}
+	{% set tag='h3' %}
+	{% include "flash.html" %}
+	<ul class="list">
+		<li><a href="/admin">Hunts</a>
+			<ul class="list">
+				<li>↪ <a href="/adminhunt">{{ g.hunt.name }}</a>
+					<ul class="list">
+						<li>↪ {{ round.name }} <button id="show-edit-btn">✏️</button>
+							<ul class="list">
+								<form class="form-grid" id="edit-container" action="/adminround" method="post">
+									{% include "adminroundform.html" %}
+									<div class="form-submit">
+									<input type="submit" name="action" value="Delete" class="btn-delete" onclick="return confirm('Are you sure you want to delete this round?')"/>
+									<input type="submit" value="Update" class="btn-update" />
+									</div>
+								</form>
+								<li>↪ Puzzles <button id="show-add-btn">➕</button></h1>
+								<form class="hidden form-grid" id="add-container" action="/adminpuzzle" method="post">
+									{% include "adminpuzzleform.html" %}
+									<div class="form-submit">
+									<input type="submit" value="Create" class="btn-update" required />
+									</div>
+								</form>
+								<div class="logs">
+									<table>
+										<tr>
+											<th>Order</th>
+											<th>Slug</th>
+											<th>Name</th>
+											<th>Meta?</th>
+										</tr>
+										{% for puzzleSlug, puzzle in roundPuzzles.items() %}
+											<tr>
+												<td class="right">{{ puzzle.order }}</td>
+												<td><a href="/adminpuzzle?round={{ roundSlug }}&puzzle={{ puzzle.slug }}">{{ puzzle.slug }}</a></td>
+												<td><a class="live" href="/puzzle/{{ puzzle.slug }}" target="_blank">{{ puzzle.name }}</a></td>
+												<td class="center">
+												{% if puzzle.meta %}
+												✔️ 
+												{% endif %}
+												</td>
+											</tr>
+										{% endfor %}
+									</table>
+								</div>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

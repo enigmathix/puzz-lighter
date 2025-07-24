@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block head %}
+	{% if captcha_key %}
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	{% endif %}
+	<script>
+		function onLogin() {
+			document.getElementById("login").submit();
+		}
+		function onForgot() {
+			document.getElementById("forgot").submit();
+		}
+	</script>
+{% endblock %}
+{% block content %}
+	<div class="main-content">
+		<header class="header">
+			<h1 class="title">Login</h1>
+			{% set cat='success' %}
+			{% set tag='h2' %}
+			{% include "flash.html" %}
+		</header>
+		<main class="content team">
+			{% set cat='error' %}
+			{% set tag='h3' %}
+			{% include "flash.html" %}
+			<div class="text">
+				When your team was registered, a team key was generated and displayed in the team profile. Please enter it below.
+			</div>
+			<form id="login" action="/login" method="post" autocomplete="on">
+				<div class="row">
+					<label for="key">Team Key:</label>
+					<input type="password" name="new-password" id="key" maxlength="10" autocomplete="new-password" required />
+				</div>
+				<div class="submit">
+					<button type="submit" class="push button g-recaptcha" data-sitekey="{{ captcha_key }}" data-callback="onLogin">SUBMIT</button>
+				</div>
+			</form>
+			<hr>
+			<div class="text">
+				If you lost your team key and didn't save it in a password manager, you can request it by email using the address you entered upon registration.
+			</div>
+			<form id="forgot" action="/login" method="post" autocomplete="on">
+				<div class="row">
+					<label for="email">Email Address:</label>
+					<input type="email" name="email" id="email" required />
+				</div>
+				<div class="submit">
+					<button type="submit" class="push button g-recaptcha" data-sitekey="{{ captcha_key }}" data-callback="onForgot">SUBMIT</button>
+				</div>
+			</form>
+		</main>
+	</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+app_engine_apis: true
+runtime: python311
+instance_class: F1
+automatic_scaling:
+  max_instances: 2
+  max_idle_instances: 1
+# default is workers=4 threads=2
+entrypoint: gunicorn -b :$PORT --workers 2 --threads 4 main:app
+# expiration time for static files
+default_expiration: "7d"
+
+handlers:
+# this is only used for the development environment if a CDN is not set up
+- url: /static
+  static_dir: static
+
+- url: /robots\.txt
+  static_files: robots.txt
+  upload: robots\.txt
+
+# all url paths starting with admin require authentication
+- url: /admin.*
+  script: auto
+  login: admin
+  secure: always
+
+- url: /.*
+  script: auto
+  secure: always
+
+# FIXME fill environment variables
+env_variables:
+  SECRET_KEY: '' 			# a random secret phrase used for flask sessions
+  FIREBASE_URL: '' 			# obtained from firebase config
+  CAPTCHA_KEY: ''			# obtained from recaptcha config
+  CAPTCHA_SECRET_KEY: ''	# obtained from recaptcha config
+  EMAIL_ADDRESS: ''			# your email address
+  GCLOUD_EMAIL_ADDRESS: '' 	# your gcloud service account address
+  DOMAIN: ''				# your domain name, e.g. example.com
+  CDN: ''					# your cdn url for static files
+
+inbound_services:
+- warmup
+- mail

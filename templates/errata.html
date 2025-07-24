@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock %}
+{% block content %}
+	<div class="main-content">
+		<header class="header">
+			{% if errata %}
+				{% set n=errata|length %}
+				{% if n > 1 %}
+					<h1 class="title">{{ n }} errata</h1>
+				{% else %}
+					<h1 class="title">1 Erratum</h1>
+				{% endif %}
+			{% else %}
+				<h1 class="title">None yet!</h1>
+			{% endif %}
+		</header>
+		<main class="content errata">
+			<div class="errata-list">
+			{% if errata %}
+				{% for time, erratum in errata.items() %}
+				<table>
+					<tr><th class="date">{{ time }}</th><th><a href="/puzzle/{{ erratum.slug}}">{{ erratum.name|safe }}</a></th></tr>
+					<tr><td colspan=2>{{ erratum.text|safe }}</td></tr>
+				</table>
+				{% endfor %}
+				<script>
+					document.addEventListener("DOMContentLoaded", function() { localizeTimestamps(); });
+				</script>
+			{% endif %}
+			</div>
+		</main>
+
+		<form class="errata-form" action="/errata" method="post">
+			<div class="row">
+			{% set cat=['success', 'error'] %}
+			{% set tag='h3' %}
+			{% include "flash.html" %}
+			</div>
+			<div class="errata-row">
+				<label for="puzzle-list">Puzzle:</label>
+				<select id="puzzle-list" name="puzzle" required>
+					<option value="" disabled selected hidden>Select a puzzle</option>
+				{% for (slug, name) in puzzles %}
+					<option value="{{ slug }}">{{ name }}</option>
+				{% endfor %}
+					<option value="#">Other</option>
+				</select>
+			</div>
+			<div class="errata-row">
+				<textarea name="erratum" placeholder="Describe your suspected erratum&hellip;" maxlength="1000" required></textarea>
+			</div>
+			<div class="bottom-menu">
+				{% if g.admin %}
+					<button type="submit" class="push button">CREATE</button>
+				{% else %}
+					<button type="submit" class="push button">SUBMIT</button>
+				{% endif %}
+			</div>
+		</form>
+	</div>
+{% endblock %}

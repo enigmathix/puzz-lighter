@@ -1,0 +1,9 @@
+__pycache__
+.DS_Store
+*.pyc
+*.swp
+datastore.db
+firebase.json
+
+# Uncomment this if you use a CDN
+# static

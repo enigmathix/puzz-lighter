@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="main-content background">
+		<header class="header">
+			<h1 class="title">Welcome to this Sample Hunt!</h1>
+			{% if current_user.is_authenticated %}
+				{% set cat=['success'] %}
+				{% set tag='h2' %}
+				{% include "flash.html" %}
+			{% endif %}
+		</header>
+		<main class="content home">
+			{% if not g.huntStarted %}
+			<p>This hunt hasn't started, so puzzles are not available yet.</p>
+			{% else %}
+			<p>This hunt has started! You can start solving puzzles.</p>
+			{% endif %}
+			{% if g.huntEnded %}
+			<p>This hunt has ended, but you can still play. The leaderboard is now frozen and you can browse puzzles as a guest.</p>
+			{% endif %}
+		</main>
+		{% if not current_user.is_authenticated %}
+		<div class="bottom-menu">
+			<a href="/login" class="push button">LOGIN</a>
+			<a href="/register" class="push button">REGISTER</a>
+			{% if g.huntEnded %}
+				<a href="/guest" class="push button">GUEST</a>
+			{% endif %}
+		</div>
+		{% endif %}
+		<footer>
+		Site piloted by <a href="https://github.com/enigmathix/puzzlighter" target="_blank">Puzz Lighter</a>
+		</footer>
+	</div>
+{% endblock %}

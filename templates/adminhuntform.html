@@ -1,0 +1,14 @@
+<input type="hidden" name="timezone" class="timezone"/>
+<div class="form-row">
+<label title="Path in the url, e.g. 2025truzzle" class="required">Slug</label>
+<input type="text" name="slug" value="{{ g.huntSlug }}" readonly />
+</div>
+<div class="form-row">
+<label class="required">Name</label><input type="text" name="name" value="{{ g.hunt.name }}" required />
+</div>
+<div class="form-row">
+<label title="Hunt local time" class="required">Start Time</label><div><input type="datetime-local" name="startTime" class="datetime" value="{{ g.hunt.startTime }}" required /><span class="zone"></span></div>
+</div>
+<div class="form-row">
+<label title="Hunt local time" class="required">End Time</label><div><input type="datetime-local" name="endTime" class="datetime" value="{{ g.hunt.endTime }}" required /><span class="zone"></span></div>
+</div>

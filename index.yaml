@@ -1,0 +1,18 @@
+indexes:
+
+- kind: Puzzle
+  ancestor: yes
+  properties:
+  - name: round
+  - name: order
+
+
+- kind: Round
+  ancestor: yes
+  properties:
+  - name: order
+
+- kind: Puzzle
+  ancestor: yes
+  properties:
+  - name: order

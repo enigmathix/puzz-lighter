@@ -1,0 +1,86 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ g.cdn }}/admin.css" />
+	<title>Admin</title>
+	<script>
+		const dateOptions = { year: 'numeric', month: 'short', weekday: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZoneName: 'short' };
+	</script>
+	<script src="{{ g.cdn }}/admin.js" defer></script>
+	<script type="module">
+		import { subscribe } from "{{ g.cdn }}/notify.js";
+
+		var events;
+		const timeOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZoneName: 'short' };
+		document.addEventListener("DOMContentLoaded", function() { events = document.getElementById("events") });
+
+		function addEvent(data) {
+			const rowId = `r${data.timestamp}-${dataHash(data.team + (data.puzzle && data.puzzle.slug || ''))}`;
+
+			if (events.querySelector(`tr#${rowId}`)) {
+				return;
+			}
+
+			const date = (new Date(data.timestamp)).toLocaleString('en-US', timeOptions);
+			const newRow = events.insertRow(1);
+
+			newRow.id = rowId;
+			newRow.className = 'highlight';
+			newRow.innerHTML = `<td class="right time">${date}</td><td>${data.team}</td>`;
+
+			if (data.puzzle && data.puzzle.slug) {
+				newRow.innerHTML += `<td>solved <a class="live" href="/puzzle/${data.puzzle.slug}" target="_blank">${data.puzzle.name}</a></td>`;
+			} else {
+				newRow.innerHTML += '<td>registered</td>';
+			}
+
+		}
+
+		{% if token %}
+			subscribe('{{ g.huntSlug }}', addEvent, '{{ token }}');
+		{% endif %}
+	</script>
+</head>
+<body>
+	<h2>Hunts <button id="show-add-btn">➕</button></h2>
+	{% set cat='error' %}
+	{% set tag='h3' %}
+	{% include "flash.html" %}
+	<form class="hidden form-grid" id="add-container" action="/adminhunt" method="post">
+		{% include "adminhuntform.html" %}
+		<div class="form-submit">
+		<input type="submit" value="Create" class="btn-update" required />
+		</div>
+	</form>
+	<div class="logs">
+	<table>
+		<tr>
+			<th>Slug</th>
+			<th>Name</th>
+			<th>Start Time</th>
+			<th>End Time</th>
+		</tr>
+		{% for hunt in hunts %}
+		<tr>
+			{% if g.huntSlug == hunt.key.string_id() %}
+				<td class="center"><a href="/adminhunt">{{ hunt.key.string_id() }}</a></td>
+				<td class="center"><a class="live" href="/" target="_blank">{{ hunt.name }}</a></td>
+			{% else %}
+				<td class="center"><a href="https://{{ hunt.key.string_id() }}.{{ domain }}/adminhunt">{{ hunt.key.string_id() }}</a></td>
+				<td class="center"><a class="live" href="https://{{ hunt.key.string_id() }}.{{ domain }}" target="_blank">{{ hunt.name }}</a></td>
+			{% endif %}
+			<td class="date">{{ hunt.startTime }}</td>
+			<td class="date">{{ hunt.endTime }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
+	<h2>Logs</h2>
+	<ul><li><a class="live" href="https://logs.{{ domain }}" target="_blank">Site Logs</a><sup>⎘</sup></li></ul>
+	<h2>Live Events</h2>
+	<div class="logs">
+		<table id="events">
+			<tr><th>Time</th><th>Team</th><th>Action</th></tr>
+		</table>
+	</div>
+</body>
+</html>

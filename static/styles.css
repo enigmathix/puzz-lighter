@@ -1,0 +1,319 @@
+html {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.error, .error a {
+	color: yellow;
+}
+
+.success, .success a {
+	color: lime;
+}
+
+.admin {
+	position: fixed;
+	top: 1em;
+	left: 3em;
+	background-color: lightgrey;
+	color: black;
+	padding: .5em 1em;
+	border-radius: 50px / 25px;
+	z-index: 1;
+}
+
+.admin a {
+	color: black;
+	text-decoration: none;
+}
+
+.errata li {
+	color: red;
+}
+
+.errata li .date {
+	font-weight: bold;
+}
+
+.errata-list table {
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+	margin-bottom: 1em;
+}
+
+.errata-list th, .errata-list td {
+	border: 1px solid white;
+	padding: .5em 1em;
+}
+
+.errata-list th {
+	width: 50%;
+	background-color: red;
+}
+
+.errata-list td {
+	background-color: lightgrey;
+	color: black;
+}
+
+.errata-form .errata-row {
+	margin-top: 1em;
+}
+
+.errata-form label, .errata-form select, .errata-form textarea {
+	font-size: 18px;
+	margin-left: 1em;
+}
+
+.errata-form textarea {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0 auto;
+	padding: .5em;
+	height: 5em;
+	resize: vertical;
+}
+
+.team {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.team .text {
+	width: 75%;
+	margin-bottom: 2em;
+}
+
+.team form {
+	min-width: 50%;
+}
+
+.team form div {
+	margin-bottom: 1em;
+}
+
+.team .row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.team .row label {
+	flex: 1;
+	margin-right: 1em;
+}
+
+.team .row input {
+	flex: 2;
+}
+
+.team .submit {
+	display: flex;
+	justify-content: center;
+	margin-top: 2em;
+}
+
+.team hr {
+	flex: 0 0 auto;
+	width: 100%;
+	color: white;
+	background-color: white;
+	border: none;
+	height: 2px;
+	margin: 1em;
+}
+
+.key {
+	color: lime;
+}
+
+#clipboard {
+	display: none;
+}
+
+.archive-container {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.list-wrapper {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	margin-left: 10px;
+	margin-right: 10px;
+	align-items: center
+}
+
+.list-wrapper ul {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	list-style-type: none;
+	padding: 0;
+}
+
+.list-wrapper li {
+	text-align: left;
+	margin-bottom: 1.5em;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.hunt {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	font-weight: 700;
+	margin-bottom: 2em;
+}
+
+#congrats {
+	display: none;
+	line-height: 1.5em;
+}
+
+#all-attempts {
+	cursor: pointer;
+}
+
+.teams {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.teams thead {
+	text-align: left;
+	padding: 10px;
+	border-bottom: 2px solid white;
+}
+
+.teams th:nth-child(1), .teams td:nth-child(1) {
+	text-align: right;
+	width: 10%;
+}
+
+.teams th:nth-child(2), .teams td:nth-child(2) {
+	width: auto;
+}
+
+.teams th:nth-child(n+3), .teams td:nth-child(n+3) {
+	text-align: right;
+}
+
+.teams th {
+	font-size: 20px;
+}
+
+.teams th, .teams td {
+	padding: 10px;
+}
+
+.teams .finisher {
+	font-weight: 700;
+}
+
+.teams .time {
+	width: 9em;
+}
+
+.team-name {
+	position: relative;
+	display: inline-block;
+}
+
+.teams .me {
+	color: yellow;
+	font-weight: bold;
+}
+
+.teams .test {
+	color: red;
+}
+
+.teams .grey {
+	color: grey;
+}
+
+.popup {
+	display: none;
+	position: absolute;
+	background-color: grey;
+	border-radius: 5px;
+	padding: 1em;
+	white-space: nowrap;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	z-index: 1;
+}
+
+.popup h2 {
+	margin: .5em .5em;
+	text-align: center;
+}
+
+.popup ul {
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+#notifications {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	flex-direction: column;
+	z-index: 1000;
+	margin-top: 1em;
+}
+
+.notification {
+	padding: 1em 2em;
+	margin-bottom: 1em;
+	border-radius: 5px;
+	background-color: #4CAF50;
+	color: white;
+	font-family: 'Roboto', Arial, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	box-shadow: 0 4px 6px rgba(255, 255, 255, 0.7);
+	animation: alert 10s ease forwards;
+}
+
+@keyframes alert {
+	0% {
+		opacity: 0;
+		transform: translateY(-2em);
+	}
+	5% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	50% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	90% {
+		opacity: 1;
+		transform: translateY(-8em);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-80em);
+	}
+}

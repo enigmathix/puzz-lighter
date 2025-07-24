@@ -1,0 +1,20 @@
+{% extends "puzzle.html" %}
+{% set puzzleId="1" %}
+{% set icon="image.png" %}
+{% set rating=1 %}
+{% set sheet="https://en.wikipedia.org/wiki/Situation_puzzle" %}
+{% set hints={
+    1: "The answer is in the question.",
+    2: "It's in the title 2.",
+    3: "It's 1 in letters.",
+} %}
+{% block banner %}
+	{% set banner.author='Buzz Lightyear' %}
+	{{ super() }}
+{% endblock %}
+{% block puzzle %}
+<p>You may need hints to solve this one.</p>
+{% endblock %}
+{% block solution %}
+<p>The answer was just one.</b>
+{% endblock %}

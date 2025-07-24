@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta property="og:title" content="{{ g.hunt.name }}">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="{{ g.huntcdn }}/image.png">
+	<meta property="og:url" content="{{ request.host_url }}">
+	<meta property="og:site_name" content="Puzzle Hunt">
+	<title>{{ g.hunt.name }}</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap">
+	<link rel="stylesheet" href="{{ g.cdn }}/styles.css">
+	<link rel="stylesheet" href="{{ g.huntcdn }}/hunt.css">
+	<link rel="icon" href="{{ g.huntcdn }}/icon.png">
+	<script src="{{ g.cdn }}/hunt.js"></script>
+	{% if current_user.is_authenticated %}
+		<script type="module">
+			import { subscribe, showNotification } from "{{ g.cdn }}/notify.js";
+			subscribe('{{ g.huntSlug }}/{{ current_user.get_id() }}', showNotification);
+		</script>
+	{% endif %}
+	{% block head %}{% endblock %}
+</head>
+<body>
+	{% if g.admin %}
+		<div class="admin"><a href="/admin" target="_blank">admin</a></div>
+	{% endif %}
+	{% if current_user.is_authenticated %}
+	<div id="notifications"></div>
+	<audio id="applause" src="{{ g.cdn }}/applause.mp3" preload="auto"></audio>
+	{% endif %}
+	<div class="menu">
+		<a href="/" class="button {{ menu.home }}">HOME</a>
+		<a href="/details" class="button {{ menu.details }}">DETAILS</a>
+		{% if current_user.is_authenticated and (g.huntStarted or current_user.testsolver) %}
+			<a href="/puzzles" class="button {{ menu.puzzles }}">PUZZLES</a>
+			{% if not current_user.guest %}
+				<a href="/errata" class="button {{ menu.errata }}">ERRATA</a>
+			{% endif %}
+		{% endif %}
+		<a href="/teams" class="button {{ menu.teams }}">TEAMS</a>
+		<a href="/hunts" class="button {{ menu.hunts }}">ALL HUNTS</a>
+		{% if current_user.is_authenticated and not current_user.guest %}
+		<a href="/team" class="button {{ menu.profile }}">PROFILE</a>
+		{% endif %}
+	</div>
+	{% block content %}{% endblock %}
+</body>
+</html>

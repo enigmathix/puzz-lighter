@@ -1,0 +1,37 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ g.cdn }}/admin.css" />
+	<script src="{{ g.cdn }}/admin.js" defer></script>
+	<title>{{ puzzle.name }}</title>
+</head>
+<body>
+	{% set cat='error' %}
+	{% set tag='h3' %}
+	{% include "flash.html" %}
+	<ul class="list">
+		<li><a href="/admin">Hunts</a>
+			<ul class="list">
+				<li>↪ <a href="/adminhunt">{{ g.hunt.name }}</a>
+					<ul class="list">
+						<li>↪ <a href="/adminround?round={{ roundSlug }}">{{ round.name }}</a>
+							<ul class="list">
+								<li>↪ {{ puzzle.name }}
+									<ul class="list">
+										<form class="form-grid" id="edit-container" action="/adminpuzzle" method="post">
+											{% include "adminpuzzleform.html" %}
+											<div class="form-submit">
+											<input type="submit" name="action" value="Delete" class="btn-delete" onclick="return confirm('Are you sure you want to delete this puzzle?')"/>
+											<input type="submit" value="Update" class="btn-update" />
+											</div>
+										</form>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

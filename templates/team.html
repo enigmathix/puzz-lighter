@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block head %}
+	{% if captcha_key and not current_user.is_authenticated %}
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+		<script>
+			function onRegister() {
+				document.getElementById("register").submit();
+			}
+		</script>
+	{% endif %}
+{% endblock %}
+{% block content %}
+	<div class="main-content">
+		<header class="header">
+			<h1 class="title">{{ header }}</h1>
+			{% if current_user.is_authenticated and not current_user.guest %}
+				<h2>Your team key is <span class="key">{{ current_user.get_id() }}</span></h2>
+				<h3>Share this link with your team members to invite them:<br>
+				<span class="key" id="copy-text">{{ keyurl }}</span>&nbsp;<a class="#" title="Copy" href="#" onclick="copyToClipboard()">📋</a>&nbsp;<span id="clipboard">Copied!</span></h3>
+			{% endif %}
+		</header>
+		<main class="content team">
+			<div class="text">
+				{% if not current_user.is_authenticated %}
+				<p>To sign up, all you need is a team name. The site generated a team key for you to share with your team once you register. Providing an email address is optional; it will only be used to re-send you the team key if you lose it.</p>
+				{% endif %}
+				<p>If you prefer to participate in “stealth mode”, you may uncheck the box below. This will simply ensure that neither your team’s name nor progress is publicly listed on the teams page.</p>
+			</div>
+			<form id="register" action="/register" method="post" autocomplete="on">
+				{% set cat=['error'] %}
+				{% set tag='h3' %}
+				{% include "flash.html" %}
+				<div class="row">
+					<label for="username">Team Name:</label>
+					<input type="text" name="username" id="username" maxlength="50" autocomplete="username" required value="{{ current_user.name }}">
+				</div>
+				<div class="row">
+					<label for="key">Team Key:</label>
+					<input type="password" name="new-password" id="key" autocomplete="new-password" readonly value="{{ key }}">
+				</div>
+				<div class="row">
+					<label for="email">Email Address:</label>
+					<input type="email" name="email" id="email" placeholder="Optional" value="{{ current_user.email }}">
+				</div>
+				<div>
+				<input type="checkbox" name="visible" id="visible" {{ 'checked' if not current_user.is_authenticated or current_user.visible }}>
+				<label for="visible">I want my team to appear in the leaderboard</label>
+				</div>
+				<div>
+				<input type="checkbox" name="spoiled" id="spoiled" {{ 'checked' if not current_user.is_authenticated or current_user.spoiled }}>
+				<label for="spoiled">Show solutions when they become available</label>
+				</div>
+				{% if current_user.is_authenticated and current_user.testsolver %}
+				<div>
+				<input type="checkbox" name="reset" id="reset">
+				<label for="reset">(Testsolvers only) Reset solves and unlocks</label>
+				</div>
+				{% endif %}
+				<div class="submit">
+				{% if current_user.is_authenticated %}
+					<button type="submit" class="push button">SAVE</button>
+				{% else %}
+					<button type="submit" class="push button g-recaptcha" data-sitekey="{{ captcha_key }}" data-callback="onRegister">SUBMIT</button>
+				{% endif %}
+				</div>
+			</form>
+		</main>
+	</div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% set banner = namespace(title=puzzle.name,
+						author='',
+						showUserAnswer='',
+						userAnswer=userAnswer,
+						message=message) %}
+{% if solved %}
+	{% set banner.showUserAnswer='visible' %}
+{% endif %}
+
+{% block head %}
+	<link rel="stylesheet" href="{{ g.huntcdn }}/puzzle.css">
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			{% if hints %}
+			hintsTimer();
+			{% endif %}
+			updateAttempts({{ milestones|safe }}, {{ attempts|tojson }}, {{ guessesLeft }}, {{ delay }});
+
+			if (window.location.hash  === '#spoiler')
+				showWriteup({{ solved|tojson }});
+		});
+	</script>
+{% endblock %}
+{% block content %}
+	<div class="main-content">
+		<div class="puzzle-menu">
+			<div class="rounds">
+				<a href="/puzzles/{{ round.key.string_id() }}" class="button">☰ {{ round.name }}</a>
+				<div class="dropdown">
+					{% for round in rounds %}
+						<a href="/puzzles/{{ round.key.string_id() }}">{{ round.name }}</a>
+					{% endfor %}
+				</div>
+			</div>
+			{% if sheet %}
+			<a href="{{ sheet }}" target="_blank" class="button">G&#8209SHEET</a>
+			{% endif %}
+			{% if hints %}
+				<a href="#" onclick="return showHints()" class="check button" id="hints" >HINTS</a>
+			{% endif %}
+			{% if puzzle.answers and not solved and not current_user.guest %}
+				<a href="#" onclick="return checkAnswer()" class="button" id="answer">CHECK ANSWER</a>
+			{% endif %}
+			{% if puzzle.answers and current_user.spoiled %}
+				{% if solution %}
+					{% set showSpoiler='visible' %}
+				{% endif %}
+				<a href="#" onclick="return showWriteup({{ solved|tojson }})" class="check button {{ showSpoiler }}" id="solution">SOLUTION</a>
+			{% endif %}
+		</div>
+		<div class="puzzle">
+			{% if hints %}
+				<div class="hints-background">
+					<div id="hintlist">
+						{% for hours, hint in hints.items() %}
+						<div class="hint">
+							<input type="checkbox" id="spoil{{loop.index}}" class="spoil">
+							<label for="spoil{{ loop.index }}" class="button">HINT {{ loop.index }}</label>
+							{% set hintRelease = unlockTime+3600*hours-g.now.timestamp() %}
+							{% if hintRelease <= 0 or solved %}
+								<div class="spoiler {{ showSpoiler }}"><span>{{ hint|safe }}</span></div>
+							{% else %}
+								<div class="spoiler visible"><span>Will be released in <span class="delay">{{ hintRelease }}</span>.</span></div>
+							{% endif %}
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+
+			<div id="dialog" class="dialog hidden">
+				<div class="dialog-content submit">
+					<span id="closeDialog" class="close-button">&times;</span>
+					<h3>CHECK ANSWER</h3>
+					<form id="answer-form" class="input-group" onsubmit="return submitAnswer(event, '{{ puzzle.key.string_id() }}')">
+						<input type="text" id="attempt" placeholder="Puzzle answer" autocomplete="off" required>
+						<button id="submit" type="submit" class="push button">SUBMIT</button>
+					</form>
+					<h3 id="congrats"></h3>
+					<div id="message"></div>
+					<div><span id="warning"></span>&nbsp;<span id="all-attempts"></span></div>
+					<ul id="attempts"></ul>
+				</div>
+			</div>
+
+			<div id="banner">
+			{% block banner %}
+				<div class="banner">
+					<img class="round-icon" src="{{ g.huntcdn }}/{{ icon }}" alt="">
+					<div class="infobox">
+						<div class="info">
+							{% block info %}
+							<div class="title">{{ banner.title }}</div>
+							<div class="author">Author: {{ banner.author }}</div>
+							{% endblock %}
+						</div>
+					</div>
+					<div class="rating">
+						{% if rating %}
+							{% for i in range(1, 6) %}
+								{% if i <= rating %}
+									<img src="{{ g.huntcdn }}/full.png" alt="">
+								{% else %}
+									<img src="{{ g.huntcdn }}/empty.png" alt="">
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					</div>
+					<div class="puzzle-answer {{ banner.showUserAnswer }}" id="user-answer">{{ banner.userAnswer|safe }}</div>
+					{% if puzzleAnswer %}
+						<div class="puzzle-answer" id="puzzle-answer">{{ puzzleAnswer|safe }}</div>
+					{% endif %}
+				</div>
+
+				<div class="messages {{ banner.showUserAnswer }}" id="puzzle-messages">
+					<h3 id="puzzle-message">{{ banner.message|safe }}</h3>
+				</div>
+			{% endblock %}
+			</div>
+
+			{% if puzzle.errata %}
+				<ul class="errata">
+				{% for time, erratum in puzzle.errata.items() %}
+					<li><span class="date">{{ time }}</span>: {{ erratum|safe }}</li>
+				{% endfor %}
+				</ul>
+				<script>
+					document.addEventListener("DOMContentLoaded", function() { localizeTimestamps(); });
+				</script>
+			{% endif %}
+			<main id="puzzle" class="content {{ background }}">
+				<div class="puzzle-{{ puzzleId }} writedown">
+					{% block puzzle %}{% endblock %}
+				</div>
+				{% if solution %}
+					<div class="puzzle-{{ puzzleId }} writeup">
+						{% block solution %}{% endblock %}
+					</div>
+				{% endif %}
+			</main>
+		</div>
+	</div>
+{% endblock %}

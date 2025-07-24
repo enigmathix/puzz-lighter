@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block head %}
+	{% if g.admin %}
+	<script src="{{ g.cdn }}/admin.js"></script>
+	{% endif %}
+	<script>
+		{% if g.admin %}
+			teams = {
+				{% for team in teams %}
+					{{ team.name|tojson }}: {
+						"key": {{ team.key.string_id()|tojson }},
+						"time": "{{ team.finishTime or '' }}",
+						"solves": {{ team.solved|length }},
+						"lastsolve": "{{ team.lastSolve or '9999' }}",
+						"visible": {{ team.visible|tojson }},
+						"unlocked": {{ team.unlocked|tojson }},
+						"solved": {{ team.solved.keys()|list|tojson }},
+						"milestones": {{ team.milestones|tojson }},
+						"testsolver": {{ team.testsolver|tojson }}
+					},
+				{% endfor %}
+			};
+		{% else %}
+			teams = {
+				{% for team in teams %}
+					{% if not team.testsolver %}
+						{{ team.name|tojson }}: { "time": "{{ team.finishTime or '' }}" },
+					{% endif %}
+				{% endfor %}
+			};
+		{% endif %}
+
+		{% if current_user.is_authenticated %}
+			document.addEventListener("DOMContentLoaded", function() { sortTeams(teams, {{ current_user.name|tojson }}, "{{ current_user.get_id() }}"); });
+		{% else %}
+			document.addEventListener("DOMContentLoaded", function() { sortTeams(teams); });
+		{% endif %}
+		{% if g.admin %}
+			document.addEventListener("DOMContentLoaded", function() { teamListener(teams); });
+		{% endif %}
+	</script>
+{% endblock %}
+{% block content %}
+	<div class="main-content">
+		<header class="header">
+			{% if g.huntStarted %}
+			<h1 class="title">List of Teams/Finishers</h1>
+			{% else %}
+			<h1 class="title">List of Teams</h1>
+			{% endif %}
+		</header>
+		<main class="content">
+		<div class="popup" id="popup"></div>
+		<table class="teams" id="teams">
+			<thead>
+				<tr>
+					{% if g.huntStarted %}
+					<th class="rank">Rank</th>
+					{% else %}
+					<th></th>
+					{% endif %}
+					<th>Team</th>
+					{% if g.admin %}
+					<th>Solves</th>
+					{% endif %}
+					{% if g.huntStarted %}
+					<th class="time">Finish Time</th>
+					{% else %}
+					<th></th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		</main>
+	</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head %}
+	<link rel="stylesheet" href="{{ g.huntcdn }}/round.css">
+{% endblock %}
+{% block content %}
+	<div class="main-content">
+		<div class="top-menu">
+		{% for round in rounds %}
+			<a href="/puzzles/{{ round.key.string_id() }}" class="button {{ 'active' if roundSlug == round.key.string_id() }}">{{ round.name }}</a>
+		{% endfor %}
+		</div>
+		<main class="puzzles">
+		<table class="puzzle-answers">
+			<colgroup>
+				{% if g.admin %}
+				<col>
+				{% endif %}
+				<col><col><col><col>
+			</colgroup>
+			{% for puzzle in puzzles %}
+				{% set slug=puzzle.key.string_id() %}
+				{% if puzzle.meta %}
+					<tr class="meta">
+				{% else %}
+					<tr>
+				{% endif %}
+				{% if g.admin %}
+				<td><span class="solved">{{ stats[slug].0 }}</span>&nbsp;/&nbsp;<span class="failed">{{ stats[slug].1 }}</span></td>
+				{% endif %}
+				<td><a href="/puzzle/{{ slug }}">{{ puzzle.name }}</a></td>
+				{% if slug in current_user.solved %}
+					<td class="puzzle-answer">{{ current_user.solved[slug] }}</td>
+				{% else %}
+					<td></td><td></td><td></td>
+				{% endif %}
+				</tr>
+			{% endfor %}
+		</table>
+		</main>
+	</div>
+{% endblock %}

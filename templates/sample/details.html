@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block head %}
+	<script>
+		document.addEventListener('DOMContentLoaded', localizeDates);
+	</script>
+{% endblock %}
+{% block content %}
+	<div class="main-content background">
+		<header class="header">
+			<h1 class="title">Welcome to this Sample Hunt!</h1>
+		</header>
+		<main class="content details">
+		<ul>
+			{% if not g.huntStarted %}
+			<li>The Sample Hunt will start on <span class="date">{{ g.hunt.startTime }}</span>.</li>
+			{% else %}
+				{% if not g.huntEnded %}
+				<li>The Sample Hunt started on <span class="date">{{ g.hunt.startTime }}</span>.</li>
+				{% else %}
+				<li>The Sample Hunt  ran from <span class="date">{{ g.hunt.startTime }}</span> to <span class="date">{{ g.hunt.endTime }}</span>.</li>
+				<li>Thanks to the user interface, solvers can still participate with this hunt just as they could while the hunt was live.</li>
+				{% endif %}
+			{% endif %}
+			<li>Each puzzle solution is a string of letters A-Z. Uppercase letters will be changed into lowercase, and any other characters will be stripped before checking for correctness.</li>
+			{% if not g.huntEnded %}
+			<li>The hunt ends on <span class="date">{{ g.hunt.endTime }}</span>. Puzzle solutions will be posted at this time.</li>
+			{% endif %}
+			</ul>
+		</main>
+	</div>
+{% endblock %}

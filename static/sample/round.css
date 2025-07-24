@@ -1,0 +1,60 @@
+.puzzles {
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	font-family: "Russo One", sans-serif;
+	font-size: var(--puzzle-title-font);
+}
+
+.puzzle-answers {
+	position: relative;
+	border-spacing: 2em .5em;
+	margin: 2em auto;
+	align-items: center;
+	font-family: "Russo One", sans-serif;
+	font-size: var(--puzzle-answer-font);
+}
+
+.puzzle-answers td.puzzle-answer {
+	background-color: lime;
+	color: black;
+	border: 2px solid white;
+	padding-left: .5em;
+	padding-right: .5em;
+	text-align: center;
+	min-width: 5em;
+}
+
+.puzzle-answers .meta td.puzzle-answer {
+	border: 4px solid;
+	border-image: linear-gradient(to right,
+		blue, indigo, violet, red, orange, yellow, green) 1;
+}
+
+.puzzle-answers td:empty {
+	background-color: black;
+	border: none;
+}
+
+.puzzle-answers .meta td.puzzle-answer:empty {
+	border: none;
+	border-image: none;
+}
+
+.puzzle-answers a, .copy a {
+	text-decoration: none;
+}
+
+.puzzle-answers .solved {
+	text-align: right;
+	color: lime;
+}
+
+.puzzle-answers .failed {
+	text-align: left;
+	color: red;
+}

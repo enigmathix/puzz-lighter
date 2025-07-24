@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block head %}
+	<script>
+		document.addEventListener('DOMContentLoaded', localizeDates);
+	</script>
+{% endblock %}
+{% block content %}
+	<main class="content">
+		<div class="archive-container">
+			<div class="list-wrapper">
+				<h1 class="header">ARCHIVE</h1>
+				<ul>
+					<li><a href="/" target="archive">This Hunt</a></li>
+				</ul>
+			</div>
+		</div>
+	</main>
+{% endblock %}

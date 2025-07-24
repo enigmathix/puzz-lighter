@@ -1,0 +1,20 @@
+{% extends "puzzle.html" %}
+{% set puzzleId="3" %}
+{% set icon="image.png" %}
+{% set rating=5 %}
+{% set sheet="https://en.wikipedia.org/wiki/Situation_puzzle" %}
+{% set hints={
+    1: "Beware of the rating.",
+    2: "Because it's the answer.",
+    3: "It's 5 in letters.",
+} %}
+{% block banner %}
+	{% set banner.author='Buzz Lightyear' %}
+	{{ super() }}
+{% endblock %}
+{% block puzzle %}
+<p>It's kind of a moon logic.</p>
+{% endblock %}
+{% block solution %}
+<p>The rating is 5 moons: the answer was just five.</b>
+{% endblock %}
