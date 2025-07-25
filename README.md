@@ -238,3 +238,23 @@ Google Cloud Datastore has three types of usage quotas:
 - **Total cost: $0.25**
 
 To reduce future read costs, a **memcache layer** (free to use) has been added to cache datastore entities. This should eliminate most excess reads and bring total cost closer to **$0**.
+
+### Gotchas
+
+Google Cloud uses **Docker** internally to deploy your code. The resulting files are stored in the **Artifact Registry**, in a repository called *gae-standard*.
+
+By default, this directory structure is **not cleaned up**, and over time, deployments can accumulate — potentially costing a few cents per month.
+
+Since we don’t need to keep these artifacts after each deploy, you should set up a **cleanup policy**:
+
+1. Go to the **Artifact Registry** menu.
+2. Select the repository called *gae-standard*.
+3. Click **Edit repository**.
+4. Scroll down to **Clean up policies**.
+5. Select **Delete artifacts**.
+6. Click **Add a cleanup policy**.
+7. Give it a name.
+8. Set the **Policy type** to **Conditional delete**.
+9. In the **Older than** field, enter `3600s` (i.e., one hour).
+
+This will automatically delete old artifacts and help you avoid unnecessary storage costs.
