@@ -132,7 +132,7 @@ class Round(MemCacheNdb):
 #			format is open and used in templates
 #	banner: optional, True if milestone should be shown in the template banner
 #						False otherwise (default value)
-#	
+#
 # errata is a dictionary with key being a timestamp and value a text
 #
 class Puzzle(MemCacheNdb):
