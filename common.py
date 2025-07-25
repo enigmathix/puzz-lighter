@@ -52,12 +52,10 @@ class logging:
 # Get hunt slug from subdomain or environment variable for local dev
 #
 def getHuntSlug():
-	huntSlug = request.host.split('.')[0]
-
 	if localdev:
-		huntSlug = os.getenv('HUNT', '')
+		return os.getenv('HUNT', '')
 
-	return huntSlug
+	return request.host.split('.')[0]
 
 #
 # Decorator to get hunt settings
