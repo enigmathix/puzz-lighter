@@ -74,8 +74,10 @@
 		{% endfor %}
 	</table>
 	</div>
+	{% if logs %}
 	<h2>Logs</h2>
-	<ul><li><a class="live" href="https://logs.{{ domain }}" target="_blank">Site Logs</a><sup>⎘</sup></li></ul>
+	<ul><li><a class="live" href="{{ logs }}" target="_blank">Site Logs</a><sup>⎘</sup></li></ul>
+	{% endif %}
 	<h2>Live Events</h2>
 	<div class="logs">
 		<table id="events">

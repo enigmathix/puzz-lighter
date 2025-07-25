@@ -125,10 +125,10 @@ class Round(MemCacheNdb):
 # Puzzle
 # key is puzzle slug in hunt namespace
 # answers is a dictionary with key being the expected answers and value a dictionary:
-#	final: True if this the final answer, 
+#	final: True if this the final answer,
 #			False if it's a milestone ("keep going!")
 #	message: string to be shown to solver, in the checker and on the page
-#	tokens: optional, a dictionary used to provide tokens to the solver, 
+#	tokens: optional, a dictionary used to provide tokens to the solver,
 #			format is open and used in templates
 #	banner: optional, True if milestone should be shown in the template banner
 #						False otherwise (default value)

@@ -60,7 +60,8 @@ def admin():
 		hunts = Hunt.query().fetch(100)
 
 		templateValues = {
-			'domain': domain,
+			'domain': os.getenv('DOMAIN'),
+			'logs': os.getenv('LOGS'),
 			'hunts': hunts,
 		}
 

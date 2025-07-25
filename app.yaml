@@ -37,6 +37,7 @@ env_variables:
   EMAIL_ADDRESS: ''			# your email address
   GCLOUD_EMAIL_ADDRESS: '' 	# your gcloud service account address
   DOMAIN: ''				# your domain name, e.g. example.com
+  LOGS: ''					# your logs url
   CDN: ''					# your cdn url for static files
 
 inbound_services:

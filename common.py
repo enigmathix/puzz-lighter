@@ -9,7 +9,6 @@ import os
 # google app engine feature: GAE_ENV is localdev if it's run locally
 localdev = os.getenv('GAE_ENV') == 'localdev'
 cdn = '/static' if localdev else os.getenv('CDN')
-domain = os.getenv('DOMAIN')
 dateFmt = '%Y-%m-%dT%H:%M'
 firebaseEnabled = os.getenv('FIREBASE_URL', '') != ''
 querycache = MemCache(prefix='q/')

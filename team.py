@@ -143,7 +143,7 @@ def login():
 					body=f'Team {team.name},\n\nYour team key is {team.key.string_id()}. you can log in by following this link: {request.base_url}?key={team.key.string_id()}\n\n{g.hunt.name}')
 
 				flash('An email with your team key has been sent.', 'success')
-				logging.info(f'Sent email to recover key for {email}')
+				logging.info(f'Sent email to recover key {team.key.string_id()} for {email}')
 				return redirect('/login', 302)
 	except Exception as e:
 		return errorPage(e)

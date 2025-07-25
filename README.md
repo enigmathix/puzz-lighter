@@ -63,7 +63,8 @@ In `app.yaml` (the App Engine config file), fill in the `env_variables` section:
 - `CAPTCHA_KEY` and `CAPTCHA_SECRET_KEY`: see reCAPTCHA section below  
 - `EMAIL_ADDRESS`: sender email for lost keys  
 - `GCLOUD_EMAIL_ADDRESS`: service account email for sending errata (recommended for higher quota)  
-- `DOMAIN`: optional, used in the admin view  
+- `DOMAIN`: your domain, used to list hunts in the admin view
+- `LOGS`: optional, url for your logging site  
 - `CDN`: see CDN section below  
 
 ---
@@ -208,7 +209,7 @@ Each instance handles up to **8 parallel requests**. To reduce memory usage, req
 ### Bandwidth
 
 - Bandwidth usage stayed below the daily quota thanks to the use of a **CDN**.
-- Without a CDN, the daily **1 GB static file** quota would likely be exceeded.
+- Without a CDN, the daily **1 GB** quota would likely be exceeded.
 - **Cost: $0**
 
 ### Datastore
