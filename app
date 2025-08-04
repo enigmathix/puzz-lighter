@@ -21,11 +21,11 @@ run)
 	;;
 
 deploy)
-	gcloud --configuration=enigmatix app deploy app.yaml --project $GOOGLE_CLOUD_PROJECT --version live $*
+	gcloud app deploy app.yaml --project $GOOGLE_CLOUD_PROJECT --version live $*
 	;;
 
 index)
-	gcloud --configuration=enigmatix app deploy index.yaml --project $GOOGLE_CLOUD_PROJECT --version live $*
+	gcloud app deploy index.yaml --project $GOOGLE_CLOUD_PROJECT --version live $*
 	;;
 
 *)
