@@ -104,7 +104,7 @@ Go to the [Firebase Console](https://console.firebase.google.com/) and:
 
     Paste this into your `static/notify.js` file.
 
-6. In *Project Settings* → *Service Accounts*, click **Generate new private key**, download the JSON file, and save it as `firebase.json` in your main directory. Update `FIREBASE_URL` in `app.yaml` to point to `'firebase.json'`.
+6. In *Project Settings* → *Service Accounts*, click **Generate new private key**, download the JSON file, and save it as `firebase.json` in your main directory.
 
 7. Under *Build* → *Authentication*, click **Get Started**. That's it. This is used to authenticate the admin interface.
 
