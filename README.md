@@ -22,24 +22,30 @@
 - Option to hide solutions to preserve original conditions for late teams  
 - Puzzle solve notifications sent to teams  
 - Support for running multiple hunts on the same server  
-- Admin interface to monitor and manage the hunt  
+- Admin interface to manage and monitor the hunt 
+- [Puzz Logs](https://github.com/enigmathix/puzz-logs) app to monitor the server logs 
 
 You can see it in action in Edric's [2025 Truzzle Hunt](https://2025truzzlehunt.happinessboard.com/). That hunt had over 1,000 users (around 400 simultaneously) and cost only $0.25 to run. Since then, improvements have been made to further reduce that cost.
 
 ---
 
-## Installation
+## 📦 Installation
 
 - Requirement: Python 3  
 - Install the [gcloud SDK](https://cloud.google.com/sdk/docs/install)  
-- Clone this repo: `git clone ...`  
-- In the repo directory, run: `pip install -r requirements.txt`
+- Clone this repo:
+
+```bash
+git clone https://github.com/enigmathix/puzz-lighter-.git
+cd puzz-lighter
+pip install -r requirements.txt
+```
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
-### Google App Engine
+### ☁️ Google App Engine
 
 Start by running `gcloud init` to set up your account and project.
 
@@ -64,12 +70,12 @@ In `app.yaml` (the App Engine config file), fill in the `env_variables` section:
 - `EMAIL_ADDRESS`: sender email for lost keys  
 - `GCLOUD_EMAIL_ADDRESS`: service account email for sending errata (recommended for higher quota)  
 - `DOMAIN`: your domain, used to list hunts in the admin view
-- `LOGS`: optional, url for your logging site  
+- `LOGS`: optional, url for your logging site, see [Puzz Lighter Logs](https://github.com/enigmathix/puzz-logs)  
 - `CDN`: see CDN section below  
 
 ---
 
-### Firebase
+### 🔥 Firebase
 
 Go to the [Firebase Console](https://console.firebase.google.com/) and:
 
@@ -112,7 +118,7 @@ Go to the [Firebase Console](https://console.firebase.google.com/) and:
 
 ---
 
-### reCAPTCHA
+### 🤖 reCAPTCHA
 
 Used to prevent brute-force key guessing on the *register* and *login* pages.
 
@@ -123,7 +129,7 @@ Used to prevent brute-force key guessing on the *register* and *login* pages.
 
 ---
 
-### CDN
+### 🌐 CDN
 
 I recommend using [Cloudflare](https://www.cloudflare.com/) to serve static files and reduce App Engine bandwidth usage (limited to 1 GB/day).
 
@@ -138,7 +144,7 @@ I recommend using [Cloudflare](https://www.cloudflare.com/) to serve static file
 
 ---
 
-## Running
+## ▶️ Running
 
 To run the server locally:
 `./app run`
@@ -153,7 +159,7 @@ Puzz Lighter supports multiple hunts on the same server. It determines the hunt 
 
 ---
 
-## Datastore
+## 🗄 Datastore
 
 To create a hunt, visit the admin interface:
 
@@ -177,7 +183,7 @@ Each hunt's `slug` is used as a **namespace**, so all puzzle data is isolated pe
 
 ---
 
-## Scaling & Quota
+## 📈 Scaling & Quota
 
 Google App Engine runs on **instances** (virtual machines). The free daily allocation includes:
 
